@@ -87,8 +87,8 @@ ${CROSS_COMPILE}readelf -a bin/busybox | grep "program interpreter"
 ${CROSS_COMPILE}readelf -a bin/busybox | grep "Shared library"
 
 # TODO: Add library dependencies to rootfs
-cp -r "$FINDER_APP_DIR/../deb/lib" "$OUTDIR/rootfs/lib/"
-cp -r "$FINDER_APP_DIR/../deb/lib64" "$OUTDIR/rootfs/lib64/"
+cp -r "$FINDER_APP_DIR/../deb/lib" "$OUTDIR/rootfs/"
+cp -r "$FINDER_APP_DIR/../deb/lib64" "$OUTDIR/rootfs/"
 
 
 # TODO: Make device nodes
