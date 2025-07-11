@@ -5,7 +5,7 @@
 
 // Optional: use these functions to add debug or error prints to your application
 #define DEBUG_LOG(msg,...)
-//#define DEBUG_LOG(msg,...) printf("threading: " msg "\n" , ##__VA_ARGS__)
+#define DEBUG_LOG(msg,...) printf("threading: " msg "\n" , ##__VA_ARGS__)
 #define ERROR_LOG(msg,...) printf("threading ERROR: " msg "\n" , ##__VA_ARGS__)
 
 void* threadfunc(void* thread_param)
@@ -38,6 +38,7 @@ void* threadfunc(void* thread_param)
     }
 
     thread_func_args->thread_complete_success = true;
+    DEBUG_LOG("THREAD SUCCESS\n");
     return thread_param;
 }
 
