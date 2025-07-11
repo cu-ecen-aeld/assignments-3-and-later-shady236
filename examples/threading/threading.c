@@ -8,13 +8,21 @@
 #define DEBUG_LOG(msg,...) printf("threading: " msg "\n" , ##__VA_ARGS__)
 #define ERROR_LOG(msg,...) printf("threading ERROR: " msg "\n" , ##__VA_ARGS__)
 
+
+long long current_time_in_milliseconds() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (long long)(tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
+}
+
+
 void* threadfunc(void* thread_param)
 {
 
     // TODO: wait, obtain mutex, wait, release mutex as described by thread_data structure
     // hint: use a cast like the one below to obtain thread arguments from your parameter
     struct thread_data* thread_func_args = (struct thread_data *) thread_param;
-    printf("THREAD START @ %ld\n", time(NULL));
+    printf("THREAD START @ %lld\n", current_time_in_milliseconds());
     
     thread_func_args->thread_complete_success = false;
 
@@ -39,7 +47,7 @@ void* threadfunc(void* thread_param)
     }
 
     thread_func_args->thread_complete_success = true;
-    printf("THREAD SUCCESS @ %ld\n", time(NULL));
+    printf("THREAD SUCCESS @ %lld\n", current_time_in_milliseconds());
     return thread_param;
 }
 

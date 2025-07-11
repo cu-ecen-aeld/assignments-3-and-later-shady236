@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <pthread.h>
+#include <sys/time.h>
 
 /**
  * This structure should be dynamically allocated and passed as
