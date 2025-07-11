@@ -17,7 +17,7 @@ void* threadfunc(void* thread_param)
     
     thread_func_args->thread_complete_success = false;
 
-    int rc = usleep(thread_func_args->wait_to_obtain_ms);
+    int rc = usleep(1000 * thread_func_args->wait_to_obtain_ms);
     if (rc != 0) {
         return thread_param;
     }
@@ -27,7 +27,7 @@ void* threadfunc(void* thread_param)
 	return thread_param;
     }
 
-    rc = usleep(thread_func_args->wait_to_release_ms);
+    rc = usleep(1000 * thread_func_args->wait_to_release_ms);
     if (rc != 0) {
         return thread_param;
     }
