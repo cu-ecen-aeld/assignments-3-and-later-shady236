@@ -36,8 +36,11 @@ bool start_thread_obtaining_mutex(pthread_t *thread, pthread_mutex_t *mutex,int 
     if (rc != 0) {
         return false;
     }
-    struct thread_data thread_args = {.mutex = mutex, .wait_to_obtain_ms = wait_to_obtain_ms, .wait_to_release_ms = wait_to_release_ms};
-    rc = pthread_create(thread, NULL, threadfunc, &thread_args);
+    struct thread_data *thread_args = malloc(sizeof(struct thread_data));
+    thread_args->mutex = mutex;
+    thread_args->wait_to_obtain_ms  = wait_to_obtain_ms;
+    thread_args->wait_to_release_ms = wait_to_release_ms;
+    rc = pthread_create(thread, NULL, threadfunc, thread_args);
     return rc == 0;
 }
 
