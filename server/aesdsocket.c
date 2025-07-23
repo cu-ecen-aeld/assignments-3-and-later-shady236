@@ -40,12 +40,14 @@ bool isAnyWaiting(int serverSockFd) {
 }
 
 
+#define   BUF_SIZE     (1024)
+
 int main(int argc, char** argv) {
     int serverSockFd = -1;
     struct addrinfo *serverAddr;
     char ipAsStr[INET6_ADDRSTRLEN];
     struct addrinfo hints;
-    char buf[1024];
+    char buf[BUF_SIZE];
     int rc;
     int clientSockFd;    
     struct sockaddr clientAddr;
@@ -69,7 +71,6 @@ int main(int argc, char** argv) {
             continue;
         }
 	ipToStr(p->ai_addr, ipAsStr, INET6_ADDRSTRLEN);
-        syslog(0, "binding to %s\n", ipAsStr);
         if (bind(serverSockFd, p->ai_addr, p->ai_addrlen) == 0) {
 	    break;
 	}
@@ -115,7 +116,7 @@ int main(int argc, char** argv) {
 
 	while (1) {
 	    do {
-                rc = recv(clientSockFd, buf, 1024, 0);
+                rc = recv(clientSockFd, buf, BUF_SIZE, 0);
 		write(rxFd, buf, rc);
 	    } while (rc > 0 && buf[rc - 1] != '\n');
 	    if (rc <= 0) {
@@ -124,7 +125,7 @@ int main(int argc, char** argv) {
 
 	    lseek(rxFd, 0, SEEK_SET);
 	    do {
-	        rc = read(rxFd, buf, 1024);
+	        rc = read(rxFd, buf, BUF_SIZE);
 		send(clientSockFd, buf, rc, 0);
 	    } while (rc > 0);
 	}
