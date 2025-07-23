@@ -2,9 +2,11 @@
 
 case '$1' in 
 	start)
-		start-stop-daemon -S -n simpleserver /usr/bin/aesdsocket
+		echo "Starting simpleserver"
+		start-stop-daemon -S -n simpleserver -a /usr/bin/aesdsocket
 		;;
 	stop)
+		echo "Stopping simpleserver"
 		start-stop-daemon -K -n simpleserver 
 		;;
 	*)
