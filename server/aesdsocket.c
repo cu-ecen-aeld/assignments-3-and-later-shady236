@@ -80,14 +80,19 @@ int main(int argc, char** argv) {
 
     freeaddrinfo(serverAddr);
     if (serverSockFd == -1) {
+        printf("bind failed\n");
         return -1;
     }
 
+    printf("bind done\n");
     if (listen(serverSockFd, 1) != 0) {
+        printf("listen failed\n");
         return -1;
     }
+    printf("listen done\n");
 
     if (argc >= 2 && strcmp(argv[1], "-d") == 0) {
+        printf("run as daemon\n");
         pid_t id = fork();
 	if (id < 0) {
 	    return -1;
@@ -98,10 +103,12 @@ int main(int argc, char** argv) {
     
     int rxFd = open("/var/tmp/aesdsocketdata", O_CREAT | O_TRUNC | O_RDWR, 0644);
     if (rxFd < 0) {
+        printf("open file /var/tmp/aesdsocketdata failed\n");
         return -1;
     }
 
     while (!stop) {
+        printf("waiting for new client\n");
 	if (!isAnyWaiting(serverSockFd)) {
 	    continue;
 	}
